@@ -116,7 +116,6 @@ page {
   transform: translateZ(2px); 
 }
 
-/* ✅ 修复标题与评分碰撞 */
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -199,6 +198,12 @@ page {
   margin: 10rpx 0;
 }
 
+.tag-date {
+  font-size: 20rpx;
+  color: #94a3b8; 
+  margin-top: 6rpx;
+  font-weight: 500;
+}
 .icon { margin-right: 10rpx; }
 .label { color: #64748b; font-weight: bold; }
 .value { color: #334155; }

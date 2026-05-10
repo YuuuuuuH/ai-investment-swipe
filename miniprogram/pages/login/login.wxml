@@ -2,7 +2,7 @@
   <view class="login-container">
     <view class="header">
       <view class="logo">💎</view>
-      <view class="title">智投大脑系统</view>
+      <view class="title">Agent 智投系统</view>
       <view class="desc">Investment Manager Terminal</view>
     </view>
 

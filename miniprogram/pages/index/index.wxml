@@ -29,6 +29,7 @@
           <view class="title-group">
             <view class="project-name">{{item.project_name}}</view>
             <view class="sector-tag">{{item.sector}}</view>
+            <view class="tag-date">更新于：{{item.latest_info_written_at}}</view>
           </view>
           <view class="ai-score">
             <text class="score-num">{{item.ai_score}}</text>
@@ -52,7 +53,23 @@
             <text class="label">团队概况：</text>
             <text class="value">{{item.team_overview}}</text>
           </view>
+
+          <view class="info-row">
+            <text class="label">融资概况：</text>
+            <text class="value">{{item.financing_overview || '暂无数据'}}</text>
+          </view>
+          
+          <view class="info-row">
+            <text class="label">业务进展：</text>
+            <text class="value">{{item.business_progress || '暂无数据'}}</text>
+          </view>
+
+          <view class="info-row">
+            <text class="label">证据链接：</text>
+            <text class="value url">{{item.evidence_urls || '内部源'}}</text>
+          </view>
         </view>
+
 
         <view class="flip-hint">点击卡片查看同行评价 ↓</view>
       </view>
