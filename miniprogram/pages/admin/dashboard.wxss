@@ -4,11 +4,47 @@
 .dashboard-header .date { font-size: 22rpx; color: #94a3b8; display: block; margin-top: 10rpx; }
 
 /* 经理进度卡片网格 */
-.stats-grid { display: flex; flex-wrap: wrap; gap: 20rpx; margin-bottom: 60rpx; }
+/* index.wxss / dashboard.wxss */
+
+/* 1. 容器：确保允许换行，并使用 space-between 让对齐更美观 */
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* 左右对齐，间隙留在中间 */
+  padding: 0 5rpx; /* 给两侧留一点微小呼吸感 */
+  margin-bottom: 60rpx;
+}
+
+/* 2. 卡片：宽度调整为略小于 50%，确保两张卡片 + 间距不超过 100% */
 .manager-card { 
-  width: calc(50% - 10rpx); background: #fff; border-radius: 30rpx; 
-  padding: 30rpx; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
+  width: 48%; /* 或者使用 calc(50% - 15rpx) */
+  background: #fff;
+  border-radius: 30rpx; 
+  padding: 30rpx 10rpx; /* 减小左右内边距，给图表腾位 */
+  margin-bottom: 20rpx; /* 纵向卡片间距 */
+  box-sizing: border-box; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.02);
+}
+
+/* 3. 微调内部图表大小，确保在半宽卡片里不拥挤 */
+.chart-box { 
+  width: 110rpx; 
+  height: 110rpx; 
+  position: relative; 
+  margin-bottom: 15rpx; 
+}
+
+.manager-info .name { 
+  font-size: 26rpx; /* 稍微缩小字号 */
+  font-weight: bold;
+  color: #334155;
+}
+
+.manager-info .detail, .manager-info .total {
+  font-size: 20rpx;
 }
 
 /* 圆环逻辑 */

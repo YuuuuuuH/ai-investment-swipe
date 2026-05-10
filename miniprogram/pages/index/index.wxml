@@ -9,7 +9,7 @@
         <text class="btn-quit" bindtap="logout">退出</text>
       </view>
     </view>
-    <text class="subtitle">当前投资经理：{{currentInvestorId}}</text>
+    <text class="subtitle">当前用户：{{currentInvestorId}}</text>
   </view>
 
   <view class="card-stack">
@@ -41,17 +41,14 @@
         <view class="card-body">
           <view class="one-liner">"{{item.one_liner}}"</view>
           <view class="info-row">
-            <text class="icon">🤖</text>
             <text class="label">来源 Agent：</text>
             <text class="value">{{item.source_agent}}</text>
           </view>
           <view class="info-row info-highlight">
-            <text class="icon">💡</text>
             <text class="label">推荐理由：</text>
             <text class="value">{{item.ai_score_reason}}</text>
           </view>
           <view class="info-row">
-            <text class="icon">👥</text>
             <text class="label">团队概况：</text>
             <text class="value">{{item.team_overview}}</text>
           </view>
@@ -73,7 +70,7 @@
         
         <scroll-view scroll-y class="feedback-list">
           <view class="empty-tip" wx:if="{{otherFeedbacks.length === 0}}">
-            🛋️ 该版本暂无同行评价记录
+            该版本暂无同行评价记录
           </view>
           
           <view class="fb-item" wx:for="{{otherFeedbacks}}" wx:key="feedback_id" wx:for-item="fb">
@@ -97,7 +94,7 @@
     <view class="input-label">我的决策意见：</view>
     <textarea 
       class="opinion-input" 
-      placeholder="在此输入 Follow 或 Pass 的深层理由..." 
+      placeholder="点击输入任何意见..." 
       bindinput="onOpinionInput"
       value="{{currentOpinion}}"
     />
