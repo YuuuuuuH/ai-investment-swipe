@@ -1,0 +1,111 @@
+<wxs module="touch" src="./touch.wxs"></wxs>
+
+<view class="page-container">
+  <view class="header-bar">
+    <view class="header-top">
+      <text class="title">AI 投资推荐</text>
+      <view class="nav-btns">
+        <text class="btn-log" bindtap="goToHistory">看板</text>
+        <text class="btn-quit" bindtap="logout">退出</text>
+      </view>
+    </view>
+    <text class="subtitle">当前投资经理：{{currentInvestorId}}</text>
+  </view>
+
+  <view class="card-stack">
+    <view 
+      class="card {{item.isFlipped ? 'flipped' : ''}}" 
+      wx:for="{{projects}}" 
+      wx:key="project_id" 
+      style="z-index: {{projects.length - index}};"
+      data-index="{{index}}"
+      bindtouchstart="{{touch.touchstart}}"
+      bindtouchmove="{{touch.touchmove}}"
+      bindtouchend="{{touch.touchend}}"
+      bindtap="toggleFlip"
+    >
+      <view class="card-side card-front">
+        <view class="card-header">
+          <view class="title-group">
+            <view class="project-name">{{item.project_name}}</view>
+            <view class="sector-tag">{{item.sector}}</view>
+          </view>
+          <view class="ai-score">
+            <text class="score-num">{{item.ai_score}}</text>
+            <text class="score-label">AI评分</text>
+          </view>
+        </view>
+
+        <view class="divider"></view>
+
+        <view class="card-body">
+          <view class="one-liner">"{{item.one_liner}}"</view>
+          <view class="info-row">
+            <text class="icon">🤖</text>
+            <text class="label">来源 Agent：</text>
+            <text class="value">{{item.source_agent}}</text>
+          </view>
+          <view class="info-row info-highlight">
+            <text class="icon">💡</text>
+            <text class="label">推荐理由：</text>
+            <text class="value">{{item.ai_score_reason}}</text>
+          </view>
+          <view class="info-row">
+            <text class="icon">👥</text>
+            <text class="label">团队概况：</text>
+            <text class="value">{{item.team_overview}}</text>
+          </view>
+        </view>
+
+        <view class="flip-hint">点击卡片查看同行评价 ↓</view>
+      </view>
+
+      <view class="card-side card-back" catchtap="stopBubble">
+        <view class="back-header">
+          <text class="back-title">同行评价 (V{{item.info_version}})</text>
+          
+          <text 
+            class="back-close" 
+            catchtap="toggleFlip" 
+            data-index="{{index}}"
+          >返回详情</text>
+        </view>
+        
+        <scroll-view scroll-y class="feedback-list">
+          <view class="empty-tip" wx:if="{{otherFeedbacks.length === 0}}">
+            🛋️ 该版本暂无同行评价记录
+          </view>
+          
+          <view class="fb-item" wx:for="{{otherFeedbacks}}" wx:key="feedback_id" wx:for-item="fb">
+            <view class="fb-user-row">
+              <text class="u-name">{{fb.investor_name}}</text>
+              <text class="u-action {{fb.action}}">{{fb.action}}</text>
+            </view>
+            <view class="fb-content">{{fb.feedback_text || '仅提交了动作偏好'}}</view>
+            <view class="fb-date">{{fb.created_at_fmt}}</view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{projects.length === 0}}">
+      🎉 所有的推荐已处理完毕！
+    </view>
+  </view>
+
+  <view class="input-section" wx:if="{{projects.length > 0}}">
+    <view class="input-label">我的决策意见：</view>
+    <textarea 
+      class="opinion-input" 
+      placeholder="在此输入 Follow 或 Pass 的深层理由..." 
+      bindinput="onOpinionInput"
+      value="{{currentOpinion}}"
+    />
+  </view>
+
+  <view class="action-tips" wx:if="{{projects.length > 0}}">
+    <view class="tip pass">👈 Pass</view>
+    <view class="tip covered">👆 Covered</view>
+    <view class="tip follow">Follow 👉</view>
+  </view>
+</view>

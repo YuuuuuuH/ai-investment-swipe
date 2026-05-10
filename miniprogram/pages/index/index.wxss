@@ -1,0 +1,330 @@
+/* ==========================================
+   1. 页面基础布局
+   ========================================== */
+page {
+  background-color: #f4f5f7;
+  height: 100vh;
+  /* 确保整个页面不滚动，只允许卡片内部滚动 */
+  overflow: hidden; 
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ==========================================
+   2. 顶部导航栏 (固定在顶部)
+   ========================================== */
+.header-bar {
+  padding: 40rpx 40rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  background: #f4f5f7;
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-bar .title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-btns {
+  display: flex;
+  gap: 15rpx;
+}
+
+.btn-log, .btn-quit {
+  font-size: 22rpx;
+  color: #4f46e5;
+  border: 1.5rpx solid #4f46e5;
+  padding: 8rpx 20rpx;
+  border-radius: 12rpx;
+  font-weight: 600;
+  background: #fff;
+}
+
+.header-bar .subtitle {
+  font-size: 24rpx;
+  color: #94a3b8;
+  margin-top: 8rpx;
+}
+
+/* ==========================================
+   3. 卡片堆叠核心 (3D 空间)
+   ========================================== */
+.card-stack {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 增强 3D 深度感 */
+  perspective: 2500rpx; 
+  margin: 10rpx 0;
+}
+
+.card {
+  position: absolute;
+  width: 670rpx;
+  height: 880rpx; /* 稍微缩短高度，适配不同屏幕 */
+  background-color: transparent;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* 翻转状态 */
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+/* ✅ 核心修复：彻底解决透明重叠 */
+.card-side {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 40rpx;
+  /* 强制纯白背景，遮挡下层内容 */
+  background-color: #ffffff !important; 
+  box-shadow: 0 15rpx 45rpx rgba(0, 0, 0, 0.1);
+  /* 翻转时隐藏背面文字 */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; 
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================
+   4. 卡片正面 (Front) 样式优化
+   ========================================== */
+.card-front {
+  padding: 40rpx;
+  z-index: 2;
+  /* 在 3D 空间微调，防止渲染重叠 */
+  transform: translateZ(2px); 
+}
+
+/* ✅ 修复标题与评分碰撞 */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 25rpx;
+}
+
+.project-name {
+  font-size: 36rpx; /* 字体适度缩小 */
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.3;
+  flex: 1; /* 自动分配剩余空间 */
+  margin-right: 20rpx; /* 与评分框保持间距 */
+}
+
+.ai-score {
+  background: #ffedd5;
+  padding: 10rpx 15rpx;
+  border-radius: 18rpx;
+  min-width: 90rpx;
+  text-align: center;
+  flex-shrink: 0; /* 强制评分框不缩放 */
+}
+
+.score-num {
+  color: #ea580c;
+  font-size: 42rpx;
+  font-weight: 900;
+  display: block;
+}
+
+.score-label {
+  color: #f97316;
+  font-size: 16rpx;
+  font-weight: bold;
+}
+
+.sector-tag {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: 20rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 8rpx;
+  margin-top: 10rpx;
+  font-weight: bold;
+}
+
+.divider {
+  height: 2rpx;
+  background: #f1f5f9;
+  margin: 30rpx 0;
+}
+
+.card-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+.one-liner {
+  font-size: 28rpx; /* 字体往回缩 */
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 25rpx;
+  line-height: 1.6;
+}
+
+.info-row {
+  margin-bottom: 18rpx;
+  font-size: 24rpx;
+}
+
+.info-highlight {
+  background: #f8fafc;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  border-left: 8rpx solid #4f46e5;
+  margin: 10rpx 0;
+}
+
+.icon { margin-right: 10rpx; }
+.label { color: #64748b; font-weight: bold; }
+.value { color: #334155; }
+
+/* 正面底部提示字 */
+.flip-hint {
+  position: absolute;
+  bottom: 25rpx;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 20rpx;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+/* ==========================================
+   5. 卡片背面 (Back) 样式优化
+   ========================================== */
+.card-back {
+  padding: 40rpx;
+  /* 初始状态处于翻转面 */
+  transform: rotateY(180deg) translateZ(2px);
+  z-index: 1;
+}
+
+.back-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  border-bottom: 2rpx solid #f1f5f9;
+  padding-bottom: 15rpx;
+}
+
+.back-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.back-close {
+  font-size: 22rpx;
+  color: #4f46e5;
+  font-weight: bold;
+}
+
+.feedback-list {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.fb-item {
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #f1f5f9;
+}
+
+.fb-user-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.u-name { font-size: 26rpx; font-weight: bold; color: #334155; }
+
+.u-action {
+  font-size: 18rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
+  font-weight: bold;
+}
+
+.u-action.follow { background: #dcfce7; color: #15803d; }
+.u-action.pass { background: #fee2e2; color: #b91c1c; }
+.u-action.covered { background: #fef3c7; color: #b45309; }
+
+.fb-content {
+  font-size: 24rpx;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.fb-date {
+  font-size: 18rpx;
+  color: #cbd5e1;
+  text-align: right;
+  margin-top: 10rpx;
+}
+
+/* ==========================================
+   6. 底部固定区域
+   ========================================== */
+.input-section {
+  padding: 25rpx 40rpx;
+  background: #ffffff;
+  border-radius: 40rpx 40rpx 0 0;
+  box-shadow: 0 -10rpx 30rpx rgba(0,0,0,0.03);
+  z-index: 110;
+}
+
+.input-label {
+  font-size: 24rpx;
+  color: #64748b;
+  margin-bottom: 12rpx;
+  font-weight: bold;
+}
+
+.opinion-input {
+  width: 100%;
+  height: 110rpx;
+  background: #f8fafc;
+  border-radius: 18rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-size: 26rpx;
+  border: 1.5rpx solid #f1f5f9;
+}
+
+.action-tips {
+  display: flex;
+  justify-content: space-around;
+  padding: 25rpx 0 50rpx;
+  background: #ffffff;
+}
+
+.tip { font-size: 24rpx; font-weight: bold; }
+.pass { color: #ef4444; }
+.follow { color: #10b981; }
+.covered { color: #f59e0b; }

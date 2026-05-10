@@ -1,0 +1,29 @@
+<view class="login-page">
+  <view class="login-container">
+    <view class="header">
+      <view class="logo">💎</view>
+      <view class="title">智投大脑系统</view>
+      <view class="desc">Investment Manager Terminal</view>
+    </view>
+
+    <view class="form-box">
+      <view class="input-group">
+        <text class="label">账户 ID</text>
+        <input class="login-input" bindinput="inputID" placeholder="请输入 ID (如 inv_001)" placeholder-class="ph" />
+      </view>
+
+      <view class="input-group">
+        <text class="label">密码</text>
+        <input class="login-input" bindinput="inputPwd" password placeholder="请输入密码" placeholder-class="ph" />
+      </view>
+
+      <button class="login-btn" bindtap="handleLogin">进入终端</button>
+      
+      <view class="tips">
+        <text>测试可用 ID: inv_001, inv_002, admin</text>
+      </view>
+    </view>
+    
+    <view class="footer-note">© 2026 SentinelFlow AI Engine</view>
+  </view>
+</view>

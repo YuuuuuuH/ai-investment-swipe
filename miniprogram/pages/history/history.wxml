@@ -1,0 +1,95 @@
+<view class="bill-page">
+  <view class="filter-bar">
+    <view 
+      wx:for="{{filterOptions}}" 
+      wx:key="value" 
+      class="filter-item {{currentFilter === item.value ? 'active' : ''}}"
+      bindtap="onFilterSelect"
+      data-value="{{item.value}}"
+    >{{item.label}}</view>
+  </view>
+
+  <scroll-view scroll-y class="bill-scroll">
+    <view class="empty-box" wx:if="{{groupedLogs.length === 0}}">
+      <image class="empty-img" src="/assets/empty.png" mode="aspectFit" wx:if="{{false}}"></image>
+      <text>暂无决策流水记录</text>
+    </view>
+
+    <view class="day-group" wx:for="{{groupedLogs}}" wx:key="date" wx:for-item="group">
+      <view class="day-header">{{group.date}}</view>
+      
+      <view class="bill-item" wx:for="{{group.items}}" wx:key="feedback_id" bindtap="showProjectDetail" data-item="{{item}}">
+        <view class="bill-left">
+          <view class="proj-name">{{item.project_name}}</view>
+          <view class="proj-info">{{item.sector}} | AI: {{item.ai_score}}分</view>
+        </view>
+        <view class="bill-right">
+          <view class="action-text {{item.action}}">{{item.action}}</view>
+          <view class="time-text">{{item.time}}</view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="footer-line" wx:if="{{groupedLogs.length > 0}}">—— 决策流水已完结 ——</view>
+  </scroll-view>
+
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="hideModal">
+    <view class="detail-card" catchtap="stopBubble">
+      <view class="card-header">
+        <view class="title-area">
+          <view class="title">{{selectedProject.project_name}}</view>
+          <view class="subtitle">{{selectedProject.sector}}</view>
+        </view>
+        <view class="history-icon-btn" bindtap="toggleVersionView">
+          <text class="btn-text">{{showVersionList ? '查看详情' : '全员记录'}}</text>
+          <text class="btn-icon">{{showVersionList ? '📄' : '🕒'}}</text>
+        </view>
+      </view>
+
+      <scroll-view scroll-y class="card-content">
+        <view class="detail-main" wx:if="{{!showVersionList}}">
+          <view class="one-liner">“ {{selectedProject.one_liner || '该项目暂无简介'}} ”</view>
+          
+          <view class="detail-row">
+            <text class="label">当前决策</text>
+            <text class="status-tag {{selectedProject.action}}">{{selectedProject.action}}</text>
+          </view>
+          
+          <view class="detail-row">
+            <text class="label">我的意见</text>
+            <view class="value opinion-text">{{selectedProject.feedback_text || '未填写评价内容'}}</view>
+          </view>
+
+          <view class="detail-row">
+            <text class="label">AI 评分</text>
+            <text class="value highlight">{{selectedProject.ai_score}} / 100</text>
+          </view>
+        </view>
+
+        <view class="version-list" wx:else>
+          <view class="version-item" wx:for="{{versionHistory}}" wx:key="feedback_id">
+            <view class="v-line"></view>
+            <view class="v-dot"></view>
+            <view class="v-header">
+              <view class="v-user">
+                <text class="u-name">{{item.investor_name}}</text>
+                <text class="u-v">V{{item.info_version}}</text>
+              </view>
+              <text class="v-date">{{item.fmt_date}}</text>
+            </view>
+            <view class="v-body">
+              <view class="v-action-row">
+                判定：<text class="action-tag-sm {{item.action}}">{{item.action}}</text>
+              </view>
+              <view class="v-opinion" wx:if="{{item.feedback_text}}">
+                “ {{item.feedback_text}} ”
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <button class="close-btn" bindtap="hideModal">关闭界面</button>
+    </view>
+  </view>
+</view>

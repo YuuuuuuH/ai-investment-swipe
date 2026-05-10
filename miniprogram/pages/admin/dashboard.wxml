@@ -1,0 +1,41 @@
+<view class="admin-container">
+  <view class="dashboard-header">
+    <text class="title">智投管理驾驶舱</text>
+    <text class="date">数据更新：2026-05-10</text>
+  </view>
+
+  <view class="stats-grid">
+    <view class="manager-card" wx:for="{{managerStats}}" wx:key="user_id">
+      <view class="chart-box">
+        <view class="circle-bg"></view>
+        <view class="circle-active" style="transform: rotate({{item.processed_count / item.total_count * 360}}deg); border-color: {{item.processed_count == item.total_count ? '#10b981' : '#4f46e5'}}"></view>
+        <view class="circle-inner">
+          <text class="percent">{{item.percent}}%</text>
+        </view>
+      </view>
+      <view class="manager-info">
+        <text class="name">{{item.user_name}}</text>
+        <text class="detail">未处理: {{item.total_count - item.processed_count}}</text>
+        <text class="total">总项目: {{item.total_count}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-section">
+    <view class="action-card upload" bindtap="handleChooseFile">
+      <view class="icon">📁</view>
+      <view class="text">
+        <text class="main">手动上传 CSV</text>
+        <text class="sub">支持从微信聊天记录选择最新项目数据</text>
+      </view>
+    </view>
+
+    <view class="action-card kanban" bindtap="goToGlobalKanban">
+      <view class="icon">📊</view>
+      <view class="text">
+        <text class="main">全局决策看板</text>
+        <text class="sub">穿透查看全员反馈流与评价细节</text>
+      </view>
+    </view>
+  </view>
+</view>

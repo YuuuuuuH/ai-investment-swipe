@@ -1,0 +1,92 @@
+page { background-color: #f6f7f9; height: 100vh; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+
+/* 筛选栏 */
+.filter-bar {
+  display: flex; background: #fff; padding: 20rpx; position: sticky; top: 0; z-index: 10;
+  border-bottom: 1rpx solid #eee; box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.02);
+}
+.filter-item {
+  flex: 1; text-align: center; font-size: 26rpx; color: #666; padding: 12rpx 0;
+  border-radius: 30rpx; margin: 0 10rpx; transition: all 0.2s;
+}
+.filter-item.active { background: #4facfe; color: #fff; font-weight: bold; }
+
+/* 账单列表 */
+.bill-scroll { height: calc(100vh - 100rpx); }
+.day-group { margin-top: 30rpx; }
+.day-header { padding: 0 40rpx; font-size: 24rpx; color: #999; margin-bottom: 16rpx; font-weight: 500; }
+
+.bill-item {
+  background: #fff; padding: 30rpx 40rpx; display: flex; justify-content: space-between;
+  align-items: center; border-bottom: 1rpx solid #f9f9f9;
+}
+.bill-item:active { background: #fafafa; }
+.proj-name { font-size: 32rpx; font-weight: 600; color: #333; margin-bottom: 6rpx; }
+.proj-info { font-size: 24rpx; color: #888; }
+
+.bill-right { text-align: right; }
+.action-text { font-size: 24rpx; font-weight: bold; text-transform: uppercase; margin-bottom: 8rpx; }
+.time-text { font-size: 22rpx; color: #ccc; }
+
+/* 决策颜色 */
+.follow { color: #22c55e; }
+.pass { color: #ef4444; }
+.covered { color: #f59e0b; }
+
+/* 弹窗遮罩 */
+.modal-mask {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6); z-index: 100;
+  display: flex; justify-content: center; align-items: center;
+  backdrop-filter: blur(4rpx);
+}
+
+.detail-card {
+  width: 88%; max-height: 85%; background: #fff; border-radius: 40rpx;
+  padding: 40rpx; display: flex; flex-direction: column; box-shadow: 0 20rpx 60rpx rgba(0,0,0,0.2);
+}
+
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30rpx; }
+.title { font-size: 40rpx; font-weight: bold; color: #1a1a1a; }
+.subtitle { font-size: 24rpx; color: #999; margin-top: 4rpx; }
+
+.history-icon-btn {
+  display: flex; align-items: center; background: #f0f7ff; padding: 10rpx 20rpx;
+  border-radius: 20rpx; border: 1rpx solid #d0e8ff;
+}
+.btn-text { font-size: 22rpx; color: #4facfe; font-weight: bold; margin-right: 6rpx; }
+
+.card-content { flex: 1; overflow-y: auto; margin-bottom: 30rpx; }
+
+/* 详情样式 */
+.one-liner {
+  font-size: 28rpx; color: #666; font-style: italic; background: #f8f9fa;
+  padding: 24rpx; border-radius: 16rpx; margin-bottom: 40rpx; line-height: 1.6; border-left: 8rpx solid #eee;
+}
+.detail-row { display: flex; justify-content: space-between; margin-bottom: 30rpx; }
+.label { font-size: 26rpx; color: #999; }
+.value { font-size: 28rpx; color: #333; text-align: right; flex: 1; margin-left: 40rpx; }
+.opinion-text { color: #555; line-height: 1.4; font-size: 26rpx; }
+.status-tag { padding: 4rpx 16rpx; border-radius: 8rpx; font-size: 22rpx; font-weight: bold; text-transform: uppercase; }
+.status-tag.follow { background: #dcfce7; color: #166534; }
+.status-tag.pass { background: #fee2e2; color: #991b1b; }
+.status-tag.covered { background: #fef3c7; color: #92400e; }
+
+/* 时间轴样式 (Timeline) */
+.version-list { padding-left: 20rpx; }
+.version-item { position: relative; padding-left: 40rpx; padding-bottom: 40rpx; }
+.v-line { position: absolute; left: 0; top: 10rpx; bottom: 0; width: 2rpx; background: #eee; }
+.v-dot { position: absolute; left: -6rpx; top: 10rpx; width: 14rpx; height: 14rpx; border-radius: 50%; background: #4facfe; border: 4rpx solid #fff; box-shadow: 0 0 0 4rpx #d0e8ff; }
+
+.v-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10rpx; }
+.u-name { font-size: 28rpx; font-weight: bold; color: #333; }
+.u-v { font-size: 20rpx; background: #f0f0f0; padding: 2rpx 10rpx; border-radius: 6rpx; margin-left: 10rpx; color: #666; }
+.v-date { font-size: 22rpx; color: #ccc; }
+.v-body { background: #f9f9f9; padding: 16rpx; border-radius: 12rpx; font-size: 24rpx; }
+.action-tag-sm { font-weight: bold; font-size: 20rpx; text-transform: uppercase; }
+
+.close-btn { 
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); color: #fff;
+  border-radius: 50rpx; font-size: 30rpx; font-weight: bold; border: none;
+}
+.empty-box { text-align: center; padding-top: 200rpx; color: #ccc; font-size: 28rpx; }

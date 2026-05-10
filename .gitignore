@@ -1,0 +1,12 @@
+# 依赖包
+node_modules/
+dist/
+unpackage/
+
+# 数据库与本地存储
+backend/database.sqlite
+backend/uploads/
+
+# 系统文件
+.DS_Store
+*.log
