@@ -40,7 +40,9 @@ const db = new sqlite3.Database(dbPath, async (err) => {
       evidence_urls TEXT,
       latest_info_written_at DATETIME,
       info_version INTEGER DEFAULT 1,
-      info_hash TEXT
+      info_hash TEXT,
+      created_at TEXT,
+      updated_at TEXT
     )`);
 
     // 反馈表 (增加唯一索引：同一个经理对同一个版本只能反馈一次)
@@ -63,7 +65,7 @@ const db = new sqlite3.Database(dbPath, async (err) => {
       password TEXT,
       role TEXT
     )`, () => {
-      // 预埋 3 个经理和 1 个管理员
+      // 预埋 3 个经理和 1 个管理员，如果已存在就不加了。
       const stmt = db.prepare("INSERT OR IGNORE INTO users VALUES (?, ?, ?, ?)");
       stmt.run('inv_001', 'Alice', '123', 'manager');
       stmt.run('inv_002', 'Bob', '123', 'manager');
