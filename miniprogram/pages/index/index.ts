@@ -61,22 +61,28 @@ toggleFlip(e: any) {
 },
 
 fetchOthersFeedback(projectId: string, version: number) {
-  // 增加超时保护
   wx.request({
     url: 'http://127.0.0.1:3000/api/project/feedback/current',
     data: { project_id: projectId, info_version: version },
     timeout: 3000, 
     success: (res: any) => {
       if (res.statusCode === 200) {
-        const list = (res.data.data || []).map((f: any) => ({
-          ...f,
-          created_at_fmt: f.created_at.substring(5, 16).replace('T', ' ')
-        }));
+        const list = (res.data.data || []).map((f: any) => {
+          
+          const isMe = f.investor_id === this.data.currentInvestorId;
+
+          let anonName = isMe ? '我' : `成员 ${f.investor_id.slice(-3)}`;
+
+          return {
+            ...f,
+            investor_name: anonName, 
+            created_at_fmt: f.created_at.substring(5, 16).replace('T', ' ')
+          };
+        });
         this.setData({ otherFeedbacks: list });
       }
     },
     fail: () => {
-      // 如果 404 或超时，清空列表避免显示上一张的内容
       this.setData({ otherFeedbacks: [] });
     }
   });
